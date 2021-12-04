@@ -40,15 +40,16 @@ if __name__=="__main__":
         lines=f.read().splitlines()
         boards=extract_boards(lines)
         first_one=True
+        completed_boards_index=[]
         for input_number in lines[0].split(","):
-            for board in boards:
-                if mark_and_check(board,input_number):
-                    if len(boards)==1:
+            for i,board in enumerate(boards): 
+                if i not in completed_boards_index and mark_and_check(board,input_number):
+                    if len(boards)-len(completed_boards_index)==1:
                         print(f"last one score ={int(input_number)*unmarked_sum(board)}")
                     if first_one:
                         print(f"first one score ={int(input_number)*unmarked_sum(board)}")
                         first_one=False
-                    boards=list(filter(lambda x:x!=board,boards))
+                    completed_boards_index.append(i)
                 
 
             
