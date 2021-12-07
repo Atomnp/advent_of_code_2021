@@ -4,9 +4,9 @@ import math
 def second(a):
     min=math.inf
     for i in a:
-        dist=sum([a[x]*abs(int(x)-int(i))*(abs(int(x)-int(i))+1)/2 for x in a])
+        dist=sum([a[x]*abs(int(x)-int(i))*(abs(int(x)-int(i))+1)//2 for x in a])
         min=dist if dist<min else min
-    return int(min)
+    return min
 
 def first(a):
     min=math.inf
