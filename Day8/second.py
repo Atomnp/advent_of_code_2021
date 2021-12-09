@@ -3,7 +3,7 @@ def foo(left,num,length,compare_to,diff):
     for i in left.split():
         if len(i)==length and len(set(i+mappings[compare_to]))==length+diff and "".join(sorted(i)) not in mappings:
             mappings[num]="".join(sorted(i))
-                
+
 if __name__=="__main__":
     with open("./Day8/input.txt","r") as f:
         lines=f.read().splitlines()
@@ -11,9 +11,7 @@ if __name__=="__main__":
         left=[line.split(" | ")[0] for line in lines]
         count=0
         for line in lines:
-            mappings=[-1]*10
-            mappings[8]="abcdefg"
-            
+            mappings=[-1 if x!=8 else "abcdefg" for x in range(10)]   
             left,right=line.split(" | ")
             
             foo(left,1,2,8,5)
