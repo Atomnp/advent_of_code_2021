@@ -1,4 +1,8 @@
 from collections import Counter
+from time import time
+
+t1 = time()
+
 
 if __name__ == "__main__":
     graph = {}
@@ -13,18 +17,22 @@ if __name__ == "__main__":
     def small(s: str):
         return s == s.lower()
 
+    alreadyTwice = False
+
     def foo(graph: dict, children: list, visited: list):
+        global alreadyTwice
         count = 0
         for child in children:
-            a = dict(Counter(visited))
-            alreadyTwice = 2 in {key: a[key] for key in a if small(key)}.values()
-
             if small(child) and child in visited and alreadyTwice:
                 continue
             elif small(child) and child in visited and not alreadyTwice:
                 visited.append(child)
+                alreadyTwice = Counter(visited)[child] > 1
+
                 count += foo(graph, graph[child], visited)
+
                 # backtrack
+                alreadyTwice = Counter(visited)[child] <= 1
                 visited.pop()
 
             elif child == "end":
@@ -44,6 +52,7 @@ if __name__ == "__main__":
             append(graph, a, b)
             append(graph, b, a)
         visited, count = [], 0
-        print(graph)
+        # print(graph)
         count = foo(graph, graph["start"], visited)
         print(count)
+        print(time() - t1)
